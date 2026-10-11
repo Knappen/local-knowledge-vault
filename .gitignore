@@ -1,0 +1,24 @@
+# Privacy allowlist: ignore everything unless it is explicitly part of the
+# portable source distribution below. This prevents accidental publication of
+# local documents, databases, logs, caches, credentials, models, or portal code.
+*
+!/.gitignore
+!/.env.example
+!/README.md
+!/rag.py
+!/rag_worker.py
+!/portable_server.py
+!/rag-requirements.txt
+!/setup.ps1
+!/start.ps1
+!/setup.sh
+!/start.sh
+!/test_portable_server.py
+!/test_rag_enter.py
+!/test_rag_routing.py
+!/public/
+/public/*
+!/public/rag.html
+!/public/rag.js
+!/public/rag.css
+!/public/favicon.svg

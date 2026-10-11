@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Knowledge Vault / AIWS</title><link rel="icon" href="/favicon.svg"><link rel="stylesheet" href="/rag.css?v=20261010-markdown"><script src="/rag.js?v=20261010-markdown" defer></script></head>
+<body>
+<header><a href="/">&larr; Workstation overview</a><span>AIWS / KNOWLEDGE VAULT</span><a href="/harness">DeepSeek Harness &nearr;</a></header>
+<main>
+  <div class="hero"><div class="eyebrow">LOCAL DOCUMENT MEMORY</div><h1>Knowledge Vault<span>.</span></h1><p>Drop important files here. Text and OCR flow into SQLite and a local FAISS index. Search the source passages or ask the local model with citations.</p><div id="totals">Loading your vault...</div></div>
+  <section><div id="drop-zone" tabindex="0" role="button" aria-label="Choose files or drop them here"><div class="drop-icon">+</div><h2>Drop files or ZIP archives</h2><p>PDFs, images, DOCX, text, and ZIPs of supported files. ZIPs up to 20 GiB; extracted contents up to 100 GiB and 100,000 files. Uploads resume when you select the same file again.</p><button id="choose-files" type="button">Choose files</button><input id="file-input" type="file" multiple accept=".zip,.pdf,.png,.jpg,.jpeg,.webp,.tif,.tiff,.txt,.md,.csv,.json,.html,.htm,.docx" hidden></div><div id="upload-list" aria-live="polite"></div></section>
+  <section><div class="section-heading"><h2>Archive jobs</h2></div><div id="archives">Checking archives...</div></section>
+  <section class="query"><div><h2>Ask your files</h2><p>Answers use retrieved passages and show the original file and page.</p></div><form id="question-form"><textarea id="question" rows="3" maxlength="2000" placeholder="What do my documents say about...?" required></textarea><div class="query-actions"><label for="answer-model">Answer model</label><select id="answer-model" aria-label="Answer model"><option value="">Router default</option></select><button id="search-button" type="button">Find passages</button><button id="ask-button" type="submit">Ask local model</button></div></form><p id="query-status" role="status"></p><div id="answer" hidden></div><div id="sources"></div></section>
+  <section><div class="section-heading"><h2>Files and indexing</h2><button id="refresh" type="button">Refresh</button></div><div id="documents">Checking ingestion...</div></section>
+</main>
+</body></html>
