@@ -8,6 +8,7 @@ A private, local-first document search and question-answering app. Upload PDFs, 
 - State-changing requests require a same-origin browser request.
 - Raw model Markdown is rendered with DOM text nodes; raw HTML is never executed.
 - Documents, indexes, databases, model caches, logs, credentials, and `.env` files are excluded from Git.
+- The private data directory is selected before the RAG module loads and is printed at startup, preventing a restart from silently opening a different empty vault.
 - No telemetry or cloud LLM is configured. The first run downloads the local embedding/reranking models from Hugging Face unless they are already cached.
 - Your OpenAI-compatible model endpoint is configurable and defaults to local Ollama at `http://127.0.0.1:11434`.
 

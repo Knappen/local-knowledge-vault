@@ -145,4 +145,5 @@ if __name__=='__main__':
         raise SystemExit('Refusing non-loopback bind. Set KNOWLEDGE_HOST to 127.0.0.1 or localhost.')
     logging.basicConfig(level=logging.INFO,format='%(asctime)s %(levelname)s %(message)s')
     print(f'Local Knowledge Vault: http://127.0.0.1:{PORT}/rag')
+    print(f'Private data directory: {rag.ROOT}')
     ThreadingHTTPServer((HOST,PORT),Handler).serve_forever()

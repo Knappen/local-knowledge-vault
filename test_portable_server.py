@@ -12,6 +12,7 @@ import urllib.request
 
 PORT = 13479
 BASE = f'http://127.0.0.1:{PORT}'
+PROJECT = Path(__file__).resolve().parent
 
 
 def request(path, method='GET', headers=None, data=None):
@@ -23,12 +24,23 @@ def request(path, method='GET', headers=None, data=None):
         return exc.code, exc.read()
 
 
+# Regression guard: portable defaults must be installed before rag is imported,
+# or the app can silently open a different/empty database after a restart.
+clean_env = os.environ.copy()
+for key in ('AIWS_KNOWLEDGE_ROOT','AIWS_RAG_PYTHON','HF_HOME','AIWS_FASTEMBED_CACHE',
+            'AIWS_ACTIVE_BACKEND','AIWS_PROFILE_ROUTER'):
+    clean_env.pop(key,None)
+probe = subprocess.run([sys.executable,'-c','import portable_server; print(portable_server.rag.ROOT.resolve())'],
+                       cwd=PROJECT,env=clean_env,capture_output=True,text=True,check=True)
+assert Path(probe.stdout.strip()) == (PROJECT/'data').resolve(), probe.stdout
+
+
 with tempfile.TemporaryDirectory(prefix='knowledge-vault-') as private_data:
     env = os.environ.copy()
     env.update(AIWS_KNOWLEDGE_ROOT=private_data, AIWS_RAG_PYTHON=sys.executable,
                KNOWLEDGE_PORT=str(PORT), PYTHONUNBUFFERED='1')
-    process = subprocess.Popen([sys.executable, str(Path(__file__).parent/'portable_server.py')],
-                               cwd=Path(__file__).parent, env=env,
+    process = subprocess.Popen([sys.executable, str(PROJECT/'portable_server.py')],
+                               cwd=PROJECT, env=env,
                                stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     try:
         for _ in range(50):
@@ -45,7 +57,7 @@ with tempfile.TemporaryDirectory(prefix='knowledge-vault-') as private_data:
         status,body = request('/api/rag/search', 'POST', {'Content-Type':'application/json'},
                               json.dumps({'question':'private'}).encode())
         assert status == 403 and b'Same-origin' in body
-        print('Portable server health, loopback Host validation, and same-origin writes passed.')
+        print('Portable storage path, health, loopback Host validation, and same-origin writes passed.')
     finally:
         process.terminate()
         try: process.wait(timeout=10)
