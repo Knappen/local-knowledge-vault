@@ -1,5 +1,5 @@
 faiss-cpu==1.15.1
-fastembed==0.8.1
+fastembed==0.9.0
 mcp==2.3.0
 Pillow==12.3.0
 PyMuPDF==1.28.2
