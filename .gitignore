@@ -4,6 +4,9 @@
 *
 !/.gitignore
 !/.env.example
+!/.github/
+/.github/*
+!/.github/dependabot.yml
 !/README.md
 !/rag.py
 !/rag_worker.py
