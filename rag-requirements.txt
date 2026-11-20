@@ -1,4 +1,4 @@
-faiss-cpu==1.15.1
+faiss-cpu==1.16.0
 fastembed==0.8.1
 mcp==2.3.0
 Pillow==12.3.0
